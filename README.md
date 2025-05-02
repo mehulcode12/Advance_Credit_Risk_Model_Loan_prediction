@@ -96,12 +96,14 @@ Top features:
 
 ### ROC Curve
 ![ROC Curve](images/roc_curve.png)
+![Metrics per class](images/metrics.png)
 
 ### KS Statistic
 - **KS Value:** 85.98% at Decile 8
 - Indicates strong rank-ordering capability.
 
 ![KS Plot](images/ks_statistic.png)
+![Feature_importance](images/feature_importance.png)
 
 ---
 
