@@ -1,173 +1,154 @@
-Advance Credit Risk Model for Loan Prediction
 
-🌐 Live Streamlit App
+# Advance Credit Risk Modeling - Loan Default Prediction
 
-🚀 Project Description
+![App Screenshot](images/streamlit_app_screenshot.png)
 
-In the world of lending, accurately assessing the risk of a loan applicant defaulting is crucial to the sustainability and profitability of financial institutions. This project builds an end-to-end machine learning pipeline that helps a lending company predict whether a loan applicant will default, using advanced data preprocessing, feature engineering, and model evaluation techniques. The solution is also deployed as a web-based Streamlit app, allowing business stakeholders to interact with the model in real time.
+This project presents a full-cycle **Credit Risk Modeling** solution to predict the likelihood of a borrower defaulting on a loan. It involves meticulous data cleaning, feature engineering, model training, business-aligned metric optimization, and deployment using Streamlit. Designed with real-world financial services impact in mind, the model prioritizes **recall** to minimize false negatives (i.e., not catching risky borrowers).
 
-📊 Problem Statement
+---
 
-Credit risk prediction involves classifying borrowers into high risk (default) and low risk (non-default) categories. Due to class imbalance and a need for interpretability, the task demands not just a high-performance model, but also one that is explainable, robust, and actionable.
+## 🚀 Project Overview
 
-👩‍💼 Business Impact
+- **Goal:** Predict whether a borrower will default on a loan.
+- **Dataset:** Provided by a financial institution with borrower-level and loan-level details.
+- **Target Variable:** `default` (1 = default, 0 = not default)
+- **Business Objective:** High **recall** for defaulters to minimize risk exposure.
+- **Deployment:** Web app hosted using Streamlit Cloud.
 
-Mitigates Financial Risk: Helps reduce bad loans.
+---
 
-Enables Proactive Decision Making: High-risk customers can be flagged early.
+## 📊 Exploratory Data Analysis (EDA) & Preprocessing
 
-Improves Operational Efficiency: Automated scoring model saves time in underwriting.
+### ✅ Class Imbalance
+The dataset was highly imbalanced:
+- Techniques used: **SMOTE-Tomek**, **oversampling**, and **threshold tuning**.
 
-Regulatory Compliance: Ensures fairness and transparency with explainable models.
+### 🛑 Data Leakage
+Handled properly by eliminating leak-prone features like `disbursal_date`, `installment_start_dt`, and derived leakage indicators.
 
-🔧 Technical Details
+### 📉 Processing Fee Anomaly
+Boxplots revealed `processing_fee` > `loan_amount`, which is invalid. These anomalies were cleaned or capped appropriately.
 
-1. 🔎 Data Exploration and Cleaning
+### 🧼 Categorical Feature Cleaning
+- `loan_purpose` cleaned and grouped into standard categories.
+- One-hot encoding and WoE/IV analysis used for feature transformation and selection.
 
-Missing Value Treatment: Used domain knowledge to impute or remove irrelevant/missing features.
+---
 
-Anomaly Detection: Boxplots revealed that in some rows, processing_fee > loan_amount. These were treated.
+## 🔍 Feature Engineering
 
-Data Leakage: Removed columns that leak future info (e.g., disbursal dates).
+### Key New Features:
+- **Loan-to-Income Ratio (LTI):** `loan_amount / income`
+- **Delinquency Ratio**
+- **Average DPD per Delinquency**
 
-2. 📊 Exploratory Data Analysis (EDA)
+### Insights:
+- High **LTI**, **delinquency_ratio**, and **avg_dpd_per_delinquency** were strong predictors of default.
+- Defaulted customers had younger age, longer loan tenure, and higher credit utilization.
 
-Default vs. Age: Younger applicants had a higher tendency to default.
+---
 
-Predictor Insights:
+## 📐 Feature Selection
 
-Higher values in loan_tenure_months, delinquent_months, total_dpd, and credit_utilization correlated with defaults.
+### Multicollinearity Check (VIF)
+Dropped correlated features: `sanction_amount`, `processing_fee`, `gst`, `net_disbursement`, `principal_outstanding`.
 
-Loan to Income Ratio (LTI): Engineered feature showing higher LTI leads to higher risk.
+### WoE & IV-Based Categorical Feature Selection:
+Top features:
+- `credit_utilization_ratio`
+- `avg_dpd_per_delinquency`
+- `loan_to_income`
+- `loan_purpose`
+- `residence_type`
+- `loan_tenure_months`
+- `loan_type`
+- `age`, etc.
 
-3. ⚖️ Feature Engineering
+---
 
-Created:
+## 🤖 Model Training & Optimization
 
-loan_to_income = loan_amount / income
+### Model Attempts:
+| Model | Accuracy | Recall (Defaulters) |
+|-------|----------|---------------------|
+| Logistic Regression (Basic) | 96% | 0.70 |
+| Random Forest | 96% | 0.69 |
+| XGBoost | 96% | 0.75 |
 
-delinquency_ratio
+### Final Model:
+- **Logistic Regression**
+- **SMOTE-Tomek**
+- **Optuna for Hyperparameter Tuning**
+- Business chose **LogReg** for explainability
 
-avg_dpd_per_delinquency
+#### Final Metrics:
+- **Accuracy:** 0.93
+- **Recall (Defaulters):** 0.95
+- **AUC:** 0.983
+- **Gini Coefficient:** 0.967
 
-Removed multicollinear features using VIF
+---
 
-Categorical variables were encoded using Weight of Evidence (WoE) and evaluated using Information Value (IV)
+## 📈 Model Evaluation
 
-4. 🧶 Model Building
+### Confusion Matrix
+![Confusion Matrix](images/confusion_matrix.png)
 
-Algorithms tried:
+### ROC Curve
+![ROC Curve](images/roc_curve.png)
 
-Logistic Regression (preferred for explainability)
+### KS Statistic
+- **KS Value:** 85.98% at Decile 8
+- Indicates strong rank-ordering capability.
 
-Random Forest
+![KS Plot](images/ks_statistic.png)
 
-XGBoost (high-performing, not chosen for business due to explainability concerns)
+---
 
-Class Imbalance Handling:
+## 📦 Deployment
 
-Used SMOTE-Tomek resampling strategy
+- **App Framework:** Streamlit
+- **Main Files:** `main.py`, `prediction_helper.py`
+- **Hosting:** [Streamlit Cloud](https://advance-credit-risk-predictor.streamlit.app/)
 
-Model Metrics:
+![Streamlit Screenshot](images/streamlit_app_screenshot.png)
 
-Logistic Regression: Recall = 0.95, Accuracy = 0.93
+---
 
-XGBoost: Recall = 0.99, Accuracy = 0.92
+## 🧠 Business Impact
 
-High AUC = 0.983, Gini Coefficient = 0.966
+- Enables better **credit risk filtering**.
+- High recall helps reduce **bad debt**.
+- Easy model interpretability aids **compliance** and **auditing**.
 
-5. 📊 Evaluation Metrics
+---
 
-Confusion Matrix, ROC-AUC, Precision-Recall Curve
+## 📁 Folder Structure
 
-KS Statistic
+```
+Advance_Credit_Risk_Model_Loan_prediction/
+├── data/
+├── notebooks/
+├── main.py
+├── prediction_helper.py
+├── README.md
+├── requirements.txt
+├── images/
+│   ├── ks_statistic.png
+│   ├── roc_curve.png
+│   ├── confusion_matrix.png
+│   └── streamlit_app_screenshot.png
+```
 
-Maximum KS value = 85.98% at Decile 8
+---
 
-“KS > 40 in top 3 deciles” indicates a strong model
+## ✍️ Author
 
-Decile Table: Top deciles had highest event rates (defaults), showing good rank ordering.
+- **Mehul Ligade**
+- GitHub: [@mehulcode12](https://github.com/mehulcode12)
 
-6. 🌐 Deployment
+---
 
-Built and deployed a Streamlit app that takes user input and predicts default risk.
-
-Files:
-
-main.py — handles Streamlit frontend
-
-prediction_helper.py — processes data and loads trained model
-
-🌟 Performance Summary
-
-Metric
-
-Value
-
-Accuracy
-
-0.93
-
-Recall (Positive)
-
-0.95
-
-AUC
-
-0.983
-
-Gini Coefficient
-
-0.966
-
-KS Statistic
-
-85.98%
-
-📷 Screenshots
-
-KS Statistic Curve
-
-
-
-Streamlit App
-
-
-
-📁 Repository Structure
-
-.
-├── datasets/                # Raw and processed datasets
-├── images/                  # Visual assets like graphs, screenshots
-├── main.py                  # Streamlit application
-├── prediction_helper.py     # Helper functions and model loading
-├── Untitled.ipynb           # Exploratory notebook with model development
-├── requirements.txt         # Environment dependencies
-└── README.md                # Project documentation
-
-🎯 Getting Started
-
-# 1. Clone the repo
-$ git clone https://github.com/mehulcode12/Advance_Credit_Risk_Model_Loan_prediction
-$ cd Advance_Credit_Risk_Model_Loan_prediction
-
-# 2. Install dependencies
-$ pip install -r requirements.txt
-
-# 3. Run the app
-$ streamlit run main.py
-
-🙌 Acknowledgements
-
-This project was completed as part of the Codebasics Data Science Bootcamp.
-
-Special thanks to mentors and the open-source community for libraries and frameworks.
-
-🌍 Connect With Me
-
-LinkedIn
-
-GitHub
-
-"A good model not only predicts well but also builds trust through explainability."
+## 📌 Note
+You are welcome to use this project as a reference. Please give credit by linking back to this repository if you find it helpful.
 
