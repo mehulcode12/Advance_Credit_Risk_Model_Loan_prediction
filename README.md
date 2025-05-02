@@ -48,7 +48,7 @@ Boxplots revealed `processing_fee` > `loan_amount`, which is invalid. These anom
 
 ---
 
-## 📐 Feature Selection
+## 📐 Feature Selectio
 
 ### Multicollinearity Check (VIF)
 Dropped correlated features: `sanction_amount`, `processing_fee`, `gst`, `net_disbursement`, `principal_outstanding`.
@@ -149,6 +149,11 @@ Advance_Credit_Risk_Model_Loan_prediction/
 
 ---
 
+## 🙌 Acknowledgements
+
+This project was completed as part of the Codebasics Data Science Bootcamp.
+Special thanks to mentors and the open-source community for libraries and frameworks.
+
 ## 📌 Note
-You are welcome to use this project as a reference. Please give credit by linking back to this repository if you find it helpful.
+You are welcome to use this project as a reference. Please give credit to CodeBasics if you find it helpful.
 
