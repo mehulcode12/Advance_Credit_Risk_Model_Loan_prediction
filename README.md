@@ -68,7 +68,7 @@ Top features:
 
 ## 🤖 Model Training & Optimization
 
-### Model Attempts:
+### Model Attempt 1 default:
 | Model | Accuracy | Recall (Defaulters) |
 |-------|----------|---------------------|
 | Logistic Regression (Basic) | 96% | 0.70 |
@@ -79,30 +79,29 @@ Top features:
 - **Logistic Regression**
 - **SMOTE-Tomek**
 - **Optuna for Hyperparameter Tuning**
-- Business chose **LogReg** for explainability
+- Business chose **Logistic Regression** for explainability
 
 #### Final Metrics:
-- **Accuracy:** 0.93
-- **Recall (Defaulters):** 0.95
-- **AUC:** 0.983
-- **Gini Coefficient:** 0.967
-
+- **Accuracy:** **93%**
+- **Recall (Defaulters):** **0.95**
+- **AUC:** **98.3%**
+- **Gini Coefficient:** **0.967**
+- 
 ---
 
 ## 📈 Model Evaluation
 
-### Confusion Matrix
-![Confusion Matrix](images/confusion_matrix.png)
+### Metrics per class
+![Metrics per class](images/metrics.png)
+
 
 ### ROC Curve
 ![ROC Curve](images/roc_curve.png)
 
-### Metrics per class
-![Metrics per class](images/metrics.png)
 
 ### KS Statistic
-- **KS Value:** 85.98% at Decile 8
-- Indicates strong rank-ordering capability.
+- #### **KS Value:** 85.98% at Decile 8
+- #### Indicates strong rank-ordering capability.
 
 ![KS Plot](images/ks_statistic.png)
 
@@ -144,6 +143,10 @@ Advance_Credit_Risk_Model_Loan_prediction/
 │   ├── roc_curve.png
 │   ├── confusion_matrix.png
 │   └── streamlit_app_screenshot.png
+│   └── metrics.png
+│   └── feature_importance.png
+├── artifacts/
+│   └── modeldata.joblib
 ```
 
 ---
@@ -152,6 +155,8 @@ Advance_Credit_Risk_Model_Loan_prediction/
 
 - **Mehul Ligade**
 - GitHub: [@mehulcode12](https://github.com/mehulcode12)
+- **CodeBasics**
+- GitHub: [@mehulcode12](https://github.com/codebasics)
 
 ---
 
