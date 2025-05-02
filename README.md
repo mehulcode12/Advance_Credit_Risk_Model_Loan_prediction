@@ -96,6 +96,8 @@ Top features:
 
 ### ROC Curve
 ![ROC Curve](images/roc_curve.png)
+
+### Metrics per class
 ![Metrics per class](images/metrics.png)
 
 ### KS Statistic
@@ -103,6 +105,8 @@ Top features:
 - Indicates strong rank-ordering capability.
 
 ![KS Plot](images/ks_statistic.png)
+
+### Feature Importance
 ![Feature_importance](images/feature_importance.png)
 
 ---
