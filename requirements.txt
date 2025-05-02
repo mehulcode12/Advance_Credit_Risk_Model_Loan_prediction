@@ -1,5 +1,6 @@
 joblib
 streamlit
+streamlit_lottie
 scikit-learn
 xgboost
 pandas
